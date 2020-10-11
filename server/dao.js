@@ -15,14 +15,14 @@ mysql.createConnection({
   connection = c;
 });
 
-async function slackWebhookSend(payload){
+async function slackWebhookSend(payload, userEmail){
   const res = await request({
     method: 'POST',
     headers: {
       'content-type': 'application/json',
     },
     uri: process.env.slack_webhook_url,
-    body: JSON.stringify({ text: payload }),
+    body: JSON.stringify({ text: `${userEmail}: ${payload}` }),
   });
 }
 
