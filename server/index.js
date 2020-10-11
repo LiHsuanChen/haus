@@ -85,7 +85,7 @@ app.get('/feedback', ensureAuthenticated, async function (req, res) {
 app.post('/feedback', ensureAuthenticated, async function (req, res) {
   const feedback = req.body.feedback;
   await Dao.createFeedback(feedback, req.user.id);
-  Dao.slackWebhookSend(feedback);
+  Dao.slackWebhookSend(feedback, req.user.email);
   return res.json({ success: true, message: "feedback created" });
 });
 
