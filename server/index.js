@@ -11,7 +11,7 @@ const Dao = require('./dao');
 
 app.use(bodyParser.json());
 
-const whitelist = ['http://localhost:3000', 'http://159.89.86.142:3000'];
+const whitelist = ['http://localhost:3000', 'http://localhost:3001', 'http://159.89.86.142:3000'];
 app.use(cors({
   origin: (origin, callback) => {
     if (whitelist.indexOf(origin) !== -1) {
@@ -48,13 +48,16 @@ passport.deserializeUser((email, cb) => {
   });
 });
 
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
 app.use(require('express-session')({ secret: 'haus exercise', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.post('/login', function(req, res, next) {
   passport.authenticate('local', (err, user, info) => {
-    console.log(user);
     if (err || !user) { 
       return res.json({ success: false, message: "invlaid" }); 
     }
@@ -67,9 +70,10 @@ app.post('/login', function(req, res, next) {
   })(req, res, next);
 });
 
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.get('/logout', function(req, res){
+  req.logout();
+  res.json({ success: true, message: "logged out" });
+});
 
 app.get('/session', ensureAuthenticated, async function (req, res) {
   return res.json({ success: true, data: req.user });
@@ -83,6 +87,7 @@ app.get('/feedback', ensureAuthenticated, async function (req, res) {
 app.post('/feedback', ensureAuthenticated, async function (req, res) {
   const feedback = req.body.feedback;
   const result = await Dao.createFeedback(feedback, req.user.id);
+  Dao.slackWebhookSend(feedback);
   return res.json({ success: true, message: "feedback created" });
 });
 

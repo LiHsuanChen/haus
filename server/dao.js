@@ -1,4 +1,5 @@
 const mysql = require('promise-mysql');
+const request = require('request-promise');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -14,6 +15,16 @@ mysql.createConnection({
   connection = c;
 });
 
+async function slackWebhookSend(payload){
+  const res = await request({
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    uri: 'https://hooks.slack.com/services/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',
+    body: JSON.stringify({ text: payload }),
+  });
+}
 
 async function hashPassword(plainPassword){
   const res = await bcrypt.hash(plainPassword, saltRounds);
@@ -60,4 +71,5 @@ module.exports = {
   createUser,
   createFeedback,
   getAllFeedback,
+  slackWebhookSend,
 }
