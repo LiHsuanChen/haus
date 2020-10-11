@@ -11,9 +11,18 @@ const Dao = require('./dao');
 
 app.use(bodyParser.json());
 
+const whitelist = ['http://localhost:3000', 'http://159.89.86.142:3000'];
 app.use(cors({
-  origin: 'http://159.89.86.142:3000'
+  origin: (origin, callback) => {
+    if (whitelist.indexOf(origin) !== -1) {
+        callback(null, true)
+    } else {
+        callback(new Error('Not allowed by CORS'))
+    }
+  },
+  credentials: true,
 }));
+
 
 passport.use(new LocalStrategy(
   (email, password, cb) => {
