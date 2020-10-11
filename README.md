@@ -6,7 +6,8 @@
 
 # Needed to be done for production readiness
 
-1. TypeScript + ESLint + Prettify +  for code readability and maintainability
+1. TypeScript + ESLint + Prettify for code readability and maintainability
+2. Minify + uglify + CDN cache for better client side optimization
 2. Functional + integration tests for better quality of code
 3. Much better error handling needed on both client and sever side
 4. Sanitize API input, use appropriate response headers, use CSP, parametrized queries for basic security concerns (e.g. sql injection/XSS)
