@@ -8,7 +8,7 @@
 
 1. TypeScript + ESLint + Prettify for code readability and maintainability
 2. Minify + uglify + CDN cache for better client side optimization
-3. Can use redux for state management, but why ?
+3. Can use redux for state management, but probably not necessary.
 4. Functional + integration tests for better quality of code
 5. Much better error handling needed on both client and sever side (e.g. right now we are not handling the send slack hook error mainly becuase I am lazy)
 6. Sanitize API input, use appropriate response headers, use CSP, parametrized queries for basic security concerns (e.g. sql injection/XSS)
