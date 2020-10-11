@@ -6,11 +6,11 @@ const saltRounds = 10;
 let connection;
 
 mysql.createConnection({
-  host     : '127.0.0.1',
-  user     : 'root',
-  port     : 3306,
-  password : 'root12345',
-  database : 'haus',
+  host     : process.env.db_host,
+  user     : process.env.db_user,
+  port     : process.env.db_port,
+  password : process.env.db_password,
+  database : process.env.db_name,
 }).then((c) => {
   connection = c;
 });
@@ -21,14 +21,13 @@ async function slackWebhookSend(payload){
     headers: {
       'content-type': 'application/json',
     },
-    uri: 'https://hooks.slack.com/services/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',
+    uri: process.env.slack_webhook_url,
     body: JSON.stringify({ text: payload }),
   });
 }
 
 async function hashPassword(plainPassword){
-  const res = await bcrypt.hash(plainPassword, saltRounds);
-  return res;
+  return await bcrypt.hash(plainPassword, saltRounds);
 }
 
 async function createUser(email, plainPassword){

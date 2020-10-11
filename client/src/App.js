@@ -22,7 +22,7 @@ export default function App() {
 
   return (
     <div className="App">
-      { state.user ? <Home user={state.user} /> : <Login /> }
+      { state.user ? <Home /> : <Login /> }
     </div>
   );
 }

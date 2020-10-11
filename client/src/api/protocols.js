@@ -1,4 +1,4 @@
-const apiUrl = "http://localhost:2020";
+const apiUrl = process.env.api_url;
 
 export async function Get(path) {
   const res = await fetch(apiUrl + path, {

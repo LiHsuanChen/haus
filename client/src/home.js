@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getFeedback, createFeedback, logout } from './api/rpc';
 
-export default function Home(props) {
+export default function Home() {
 
   const [state, setState] = useState({
     feedback: [],

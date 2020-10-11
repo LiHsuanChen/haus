@@ -2,16 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const cors = require('cors');
-const port = 2020;
+const port = process.env.port;
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
 const Dao = require('./dao');
-
-app.use(bodyParser.json());
-
 const whitelist = ['http://localhost:3000', 'http://localhost:3001', 'http://159.89.86.142:3000'];
+
 app.use(cors({
   origin: (origin, callback) => {
     if (whitelist.indexOf(origin) !== -1) {
@@ -23,6 +21,10 @@ app.use(cors({
   credentials: true,
 }));
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 passport.use(new LocalStrategy(
   (email, password, cb) => {
@@ -48,10 +50,6 @@ passport.deserializeUser((email, cb) => {
   });
 });
 
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-
 app.use(require('express-session')({ secret: 'haus exercise', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -76,7 +74,7 @@ app.get('/logout', function(req, res){
 });
 
 app.get('/session', ensureAuthenticated, async function (req, res) {
-  return res.json({ success: true, data: req.user });
+  return res.json({ success: true, data: req.user.id });
 });
 
 app.get('/feedback', ensureAuthenticated, async function (req, res) {
@@ -86,15 +84,13 @@ app.get('/feedback', ensureAuthenticated, async function (req, res) {
 
 app.post('/feedback', ensureAuthenticated, async function (req, res) {
   const feedback = req.body.feedback;
-  const result = await Dao.createFeedback(feedback, req.user.id);
+  await Dao.createFeedback(feedback, req.user.id);
   Dao.slackWebhookSend(feedback);
   return res.json({ success: true, message: "feedback created" });
 });
 
 app.post('/verify', async function (req, res) {
-  const email = req.body.email;
-  const password = req.body.password;
-  const user = await Dao.verifyUser(email, password);
+  const user = await Dao.verifyUser(req.body.email, req.body.password);
 });
 
 app.post('/register', async function (req, res) {
