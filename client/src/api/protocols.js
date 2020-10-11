@@ -1,4 +1,4 @@
-const apiUrl = "http://localhost:2020";
+const apiUrl = "http://159.89.86.142:2020";
 
 export async function Get(path) {
   const res = await fetch(apiUrl + path, {

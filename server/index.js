@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+const cors = require('cors');
 const port = 2020;
 
 const passport = require('passport');
@@ -9,6 +10,10 @@ const LocalStrategy = require('passport-local').Strategy;
 const Dao = require('./dao');
 
 app.use(bodyParser.json());
+
+app.use(cors({
+  origin: 'http://159.89.86.142'
+}));
 
 passport.use(new LocalStrategy(
   (email, password, cb) => {
