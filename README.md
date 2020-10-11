@@ -8,10 +8,11 @@
 
 1. TypeScript + ESLint + Prettify for code readability and maintainability
 2. Minify + uglify + CDN cache for better client side optimization
-2. Functional + integration tests for better quality of code
-3. Much better error handling needed on both client and sever side
-4. Sanitize API input, use appropriate response headers, use CSP, parametrized queries for basic security concerns (e.g. sql injection/XSS)
-5. Add inline code comments for better maintainability
-6. Use Vault or secret for sensitive data
-7. Break server side code files into more modular organization
-8. Deploy to a better infrastructure for scale
+3. Can use redux for state management, but why ?
+4. Functional + integration tests for better quality of code
+5. Much better error handling needed on both client and sever side
+6. Sanitize API input, use appropriate response headers, use CSP, parametrized queries for basic security concerns (e.g. sql injection/XSS)
+7. Add inline code comments for better maintainability
+8. Use Vault or secret for sensitive data
+9. Break server side code files into more modular organization
+10. Deploy to a better infrastructure for scale
