@@ -12,7 +12,7 @@ const Dao = require('./dao');
 app.use(bodyParser.json());
 
 app.use(cors({
-  origin: 'http://159.89.86.142'
+  origin: 'http://159.89.86.142:3000'
 }));
 
 passport.use(new LocalStrategy(
