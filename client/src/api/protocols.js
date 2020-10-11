@@ -8,12 +8,7 @@ export async function Get(path) {
       "Content-Type": "application/json",
     },
   });
-
-  const data = await res.json();
-
-  console.log(data);
-
-  return data
+  return await res.json();
 }
 
 export async function Post(path, request) {
@@ -25,8 +20,5 @@ export async function Post(path, request) {
       "Content-Type": "application/json",
     },
   });
-
-  const data = await res.json();
-
-  return data
+  return await res.json();
 }

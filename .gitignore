@@ -1,0 +1,13 @@
+# dependencies
+client/node_modules
+server/node_modules
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+client/npm-debug.log*
+server/npm-debug.log*
