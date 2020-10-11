@@ -3,7 +3,7 @@ const apiUrl = "http://159.89.86.142:2020";
 export async function Get(path) {
   const res = await fetch(apiUrl + path, {
     method: "get",
-    credentials:"same-origin",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
@@ -19,7 +19,7 @@ export async function Get(path) {
 export async function Post(path, request) {
   const res = await fetch(apiUrl + path, {
     method: "post",
-    credentials:"same-origin",
+    credentials: "include",
     body: JSON.stringify(request),
     headers: {
       "Content-Type": "application/json",
